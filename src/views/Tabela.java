@@ -722,11 +722,28 @@ public class Tabela extends javax.swing.JFrame {
     private void btnFiltroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFiltroMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnFiltroMouseClicked
+    //Metodo auxiliar
+    private void exibirNaTabela(List<Produto> produtos) {
+    DefaultTableModel modelo = (DefaultTableModel) tblTabela.getModel();
+    modelo.setRowCount(0); // limpa a tabela
+
+    for (Produto p : produtos) {
+        modelo.addRow(new Object[]{
+            p.getId(),
+            p.getProduto(),
+            p.getQtd(),
+            p.getPreco(),
+            p.getTotal()
+        });
+    }
+}
 
     private void btnFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroActionPerformed
         // TODO add your handling code here:
-       
-   String filtroProduto = txtFiltro.getText(); // Campo para filtrar produto
+    String filtro = txtFiltro.getText().trim().toLowerCase();   
+    
+        
+    String filtroProduto = txtFiltro.getText(); // Campo para filtrar produto
     String qtdTexto = txtQtd.getText(); // Campo para filtrar quantidade
     String precoTexto = txtPreco.getText(); // Campo para filtrar preço
     String totalTexto = txtTotal.getText(); // Campo para filtrar total
@@ -736,9 +753,24 @@ public class Tabela extends javax.swing.JFrame {
     Double total = null;
 
     ProdutoDAO produtoDao = new ProdutoDAO();
+    List<Produto> todos = produtoDao.listaProdutos();
+    
+    // Filtrar por nome que contenha o texto digitado
+    List<Produto> filtrados = new ArrayList<>();
+    for (Produto p : todos) {
+        if (p.getProduto().toLowerCase().contains(filtro)) {
+            filtrados.add(p);
+        }
+    }
 
+    if (filtrados.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Nenhum produto encontrado com esse filtro.");
+    }
+
+    exibirNaTabela(filtrados);  // método para atualizar a JTable
+    
     // Tenta converter a quantidade, preço e total, se os campos não estiverem vazios
-    try {
+   /* try {
         if (!qtdTexto.isEmpty()) {
             qtd = Integer.parseInt(qtdTexto);
         }
@@ -765,7 +797,7 @@ public class Tabela extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao filtrar produto: " + e.getMessage());
         }
     }
-        
+       */ 
     }//GEN-LAST:event_btnFiltroActionPerformed
 
     private void btnFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnFiltroKeyPressed
@@ -774,6 +806,7 @@ public class Tabela extends javax.swing.JFrame {
 
     private void txtFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltroActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtFiltroActionPerformed
 
     private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
@@ -872,6 +905,7 @@ public class Tabela extends javax.swing.JFrame {
         txtPreco.setText("");
         txtQtd.setText("");
         txtTotal.setText("");
+        txtFiltro.setText("");
     }
 
 }

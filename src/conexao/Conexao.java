@@ -22,7 +22,7 @@ public class Conexao {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, password); 
-            System.out.println("Conexão realizada com sucesso");
+            //System.out.println("Conexão realizada com sucesso"); desativado poluição visual no console
             return true;
         }catch(ClassNotFoundException | SQLException ex){
             System.out.println("Falha na conexao com o banco de dados" + ex.getMessage());
