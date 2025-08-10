@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class Conexao {
     private final String url = "jdbc:mysql://localhost:3306/hipermercado"; // nome do banco de dados
     private final String user = "root"; // usuario
-    private final String password = "#SENAC986525"; //senha do MySQL
+    private final String password = ""; //senha do MySQL
     
     public Connection conn; //criando um objeto do tipo connection chamado conn
     
