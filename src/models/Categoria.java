@@ -3,6 +3,7 @@ package models;
 
 /**
  *BR-Software Vs. 1.0 25/09/2024
+ * Projeto Supermercado
  * @author Ruberval Brasileiro
  */
 public class Categoria extends Produto {
