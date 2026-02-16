@@ -6,6 +6,7 @@
 
 # Build e Dependências
 /build/
+/nbproject/private/
 /dist/
 /target/
 /bin/
