@@ -1,4 +1,3 @@
-
 db.url=jdbc:mysql://localhost:3306/hipermercado
-db.user=seu_usuario
-db.password=sua_senha_aqui
+db.user=usuario_aqui
+db.password=senha_aqui
