@@ -1,0 +1,29 @@
+# Java - Bytecode e Logs
+*.class
+*.log
+*.jar
+*.war
+
+# Build e Dependências
+/build/
+/dist/
+/target/
+/bin/
+
+# IDEs (IntelliJ, NetBeans, VS Code)
+/.idea/
+/nbproject/
+/.vscode/
+*.iml
+*.nbattrs
+
+# Sistema Operacional
+.DS_Store
+Thumbs.db
+
+# Database e Credenciais (O MAIS IMPORTANTE)
+*.db
+*.sql
+.env
+config.properties
+src/main/resources/db.properties
