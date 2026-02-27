@@ -1,15 +1,17 @@
 
 package models;
 
+
 /**
- *BR-Software Vs. 1.0 25/09/2024
+ * BR-Software Vs. 1.0 25/09/2024
  * Projeto Supermercado
+ * 
  * @author Ruberval Brasileiro
  */
 public class Produto {
     private int id;
     private String produto;
-    private int qtd;
+    private double qtd;
     private double preco;
     private double total;
     private String categoria;
@@ -18,25 +20,33 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(int id, String produto, int qtd, double preco, double total, String categoria) {
+    public Produto(int id, String produto, double qtd, double preco, double total, String categoria) {
         this.id = id;
         this.produto = produto;
-        this.qtd = 1;
+        this.qtd = qtd;
         this.preco = preco;
         this.total = qtd * preco;
         this.categoria = categoria;
     }
-    
 
-    public Produto(int id, String produto, int qtd, double preco, double total, String categoria, String supermercado) {
+    public Produto(int id, String produto, double qtd, double preco, double total, String categoria,
+            String supermercado) {
         this.id = id;
         this.produto = produto;
-        this.qtd = 1;
+        this.qtd = qtd;
         this.preco = preco;
         this.total = qtd * preco;
         this.categoria = categoria;
         this.supermercado = supermercado;
     }
+
+    public double gettotalReal() {
+    // Se o total estiver zerado mas houver preço e qtd, ele calcula na hora de devolver
+    if (this.total == 0 && this.qtd > 0 && this.preco > 0) {
+        return this.qtd * this.preco;
+    }
+    return total;
+}
 
     public int getId() {
         return id;
@@ -54,11 +64,11 @@ public class Produto {
         this.produto = produto;
     }
 
-    public int getQtd() {
+    public double getQtd() {
         return qtd;
     }
 
-    public void setQtd(int qtd) {
+    public void setQtd(double qtd) {
         this.qtd = qtd;
     }
 
@@ -71,6 +81,9 @@ public class Produto {
     }
 
     public double getTotal() {
+        if (this.total == 0 && this.qtd > 0 && this.preco > 0) {
+        return this.qtd * this.preco;
+    }
         return total;
     }
 
@@ -93,7 +106,7 @@ public class Produto {
     public void setSupermercado(String supermercado) {
         this.supermercado = supermercado;
     }
+
     
-    
-    
+
 }

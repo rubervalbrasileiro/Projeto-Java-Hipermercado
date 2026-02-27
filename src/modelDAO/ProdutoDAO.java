@@ -13,7 +13,8 @@ import models.Produto;
 
 /**
  * BR-Software Vs. 1.0 25/09/2024
- *Projeto Supermercado
+ * Projeto Supermercado
+ * 
  * @author Ruberval Brasileiro
  */
 public class ProdutoDAO {
@@ -37,7 +38,9 @@ public class ProdutoDAO {
         return produtoFormatado.toString().trim();
     }
 
-    public void criar(String produto, int qtd, double preco, double total) {
+
+
+    public void criar(String produto, double qtd, double preco, double total) {
         Conexao conexao = new Conexao();
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -52,7 +55,7 @@ public class ProdutoDAO {
                 // Formata o nome do produto antes de inserir no banco
                 produto = capitalizarNomeProduto(produto);
                 stmt.setString(1, produto);
-                stmt.setInt(2, qtd);
+                stmt.setDouble(2, qtd);
                 stmt.setDouble(3, preco);
                 stmt.setDouble(4, total);
 
@@ -92,17 +95,18 @@ public class ProdutoDAO {
             if (conexao.conectar()) {
                 connection = conexao.getConn();
                 String sql = "SELECT * FROM produto WHERE status = 1";
-                //String sql = "SELECT id, produto, qtd, preco, total FROM produto";  // SQL corrigido para a tabela produto
+                // String sql = "SELECT id, produto, qtd, preco, total FROM produto"; // SQL
+                // corrigido para a tabela produto
                 stmt = connection.prepareStatement(sql);
                 rs = stmt.executeQuery();
 
                 // Itera pelos resultados e adiciona na lista de produtos
                 while (rs.next()) {
                     Produto p = new Produto();
-                    p.setId(rs.getInt("id"));  // Atualiza o nome da coluna para idproduto
-                    p.setProduto(rs.getString("produto"));  // Atualiza o nome da coluna para nome
-                    p.setQtd(rs.getInt("qtd"));  // Atualiza o nome da coluna para estoque
-                    p.setPreco((double) rs.getDouble("preco"));  // Atualiza o nome da coluna para fabricante
+                    p.setId(rs.getInt("id")); // Atualiza o nome da coluna para idproduto
+                    p.setProduto(rs.getString("produto")); // Atualiza o nome da coluna para nome
+                    p.setQtd(rs.getDouble("qtd")); // Atualiza o nome da coluna para estoque
+                    p.setPreco((double) rs.getDouble("preco")); // Atualiza o nome da coluna para fabricante
                     p.setTotal(rs.getDouble("total"));
                     produtos.add(p);
                 }
@@ -126,10 +130,10 @@ public class ProdutoDAO {
             }
         }
 
-        return produtos;  // Retorna a lista de produtos obtida
+        return produtos; // Retorna a lista de produtos obtida
     }
 
-    public void atualizar(int id, String produto, int qtd, double preco, double total) {
+    public void atualizar(int id, String produto, double qtd, double preco, double total) {
         Conexao conexao = new Conexao();
         Connection connection = null;
         PreparedStatement stmt = null;
@@ -145,12 +149,12 @@ public class ProdutoDAO {
                 // Formata o nome do produto antes de atualizar no banco
                 produto = capitalizarNomeProduto(produto);
                 stmt.setString(1, produto);
-                stmt.setInt(2, qtd);
+                stmt.setDouble(2, qtd);
                 stmt.setDouble(3, preco);
                 stmt.setDouble(4, total);
-                stmt.setInt(5, id);  // Define o identificador do produto a ser atualizado
+                stmt.setInt(5, id); // Define o identificador do produto a ser atualizado
 
-                int linhasAfetadas = stmt.executeUpdate();  // Executa a atualização
+                int linhasAfetadas = stmt.executeUpdate(); // Executa a atualização
 
                 // Verifica se o produto foi atualizado com sucesso
                 if (linhasAfetadas > 0) {
@@ -178,7 +182,7 @@ public class ProdutoDAO {
             }
         }
     }
-   
+
     public boolean produtoExiste(String nomeProduto) {
         Conexao conexao = new Conexao();
         Connection connection = null;
@@ -201,9 +205,12 @@ public class ProdutoDAO {
             JOptionPane.showMessageDialog(null, "Erro ao verificar se o produto já existe: " + e.getMessage());
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (connection != null) conexao.desconectar(connection, stmt);
+                if (rs != null)
+                    rs.close();
+                if (stmt != null)
+                    stmt.close();
+                if (connection != null)
+                    conexao.desconectar(connection, stmt);
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao fechar conexão: " + e.getMessage());
             }
@@ -211,137 +218,129 @@ public class ProdutoDAO {
         return false; // Produto não existe
     }
 
-    public void inativarProduto(int id){
+    public void inativarProduto(int id) {
         Conexao conexao = new Conexao();
         Connection connection = null;
         PreparedStatement stmt = null;
-        
-        try{
-            if(conexao.conectar()){
+
+        try {
+            if (conexao.conectar()) {
                 connection = conexao.getConn();
-                 // Atualiza o status para 0 (inativo)
-                 String sql = "UPDATE produto SET status = 0 WHERE id = ?";
-                 
-                 stmt = connection.prepareStatement(sql);
-                 stmt.setInt(1, id); // Passa o ID do produto que será inativado
-//                 JOptionPane.showMessageDialog(null, "Você deseja realmente excluir o produto selecionado!");
-                 int rowsAffected = stmt.executeUpdate();
-                 if(rowsAffected > 0){
-                     JOptionPane.showMessageDialog(null, "Produto inativado com Sucesso!");
-                 }else{
-                     JOptionPane.showMessageDialog(null, "Produto não encontrado!");
-                 }
-            }else{
+                // Atualiza o status para 0 (inativo)
+                String sql = "UPDATE produto SET status = 0 WHERE id = ?";
+
+                stmt = connection.prepareStatement(sql);
+                stmt.setInt(1, id); // Passa o ID do produto que será inativado
+                // JOptionPane.showMessageDialog(null, "Você deseja realmente excluir o produto
+                // selecionado!");
+                int rowsAffected = stmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(null, "Produto inativado com Sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Produto não encontrado!");
+                }
+            } else {
                 JOptionPane.showMessageDialog(null, "Erro ao conectar o banco de dados");
             }
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao inativar o Produto" + e.getMessage());
         }
-        if(connection != null){
+        if (connection != null) {
             conexao.desconectar(connection, stmt);
         }
     }
-    
-    
-    
+
     // Método para buscar produtos filtrados com base nos campos fornecidos
-    public List<Produto> filtro(String produto, Integer qtd, Double preco, Double total) throws SQLException {
-    Conexao conexao = new Conexao();
-    Connection connection = null;
-    List<Produto> produtos = new ArrayList<>();
+    public List<Produto> filtro(String produto, Double qtd, Double preco, Double total) throws SQLException {
+        Conexao conexao = new Conexao();
+        Connection connection = null;
+        List<Produto> produtos = new ArrayList<>();
 
-    try {
-        if (conexao.conectar()) {
-            connection = conexao.getConn();
-            
-            String sql = "SELECT * FROM produto WHERE 1=1"; // Começa com uma condição sempre verdadeira
+        try {
+            if (conexao.conectar()) {
+                connection = conexao.getConn();
 
-            // Constrói a consulta com base nos parâmetros recebidos
-            if (produto != null && !produto.isEmpty()) {
-                sql += " AND produto LIKE ?";
-            }
-            if (qtd != null) {
-                sql += " AND qtd = ?";
-            }
-            if (preco != null) {
-                sql += " AND preco = ?";
-            }
-            if (total != null) {
-                sql += " AND total = ?";
-            }
+                String sql = "SELECT * FROM produto WHERE 1=1"; // Começa com uma condição sempre verdadeira
 
-            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-                int index = 1;
-
-                // Preenche os valores dos parâmetros na consulta
+                // Constrói a consulta com base nos parâmetros recebidos
                 if (produto != null && !produto.isEmpty()) {
-                    stmt.setString(index++, "%" + produto + "%");
+                    sql += " AND produto LIKE ?";
                 }
                 if (qtd != null) {
-                    stmt.setInt(index++, qtd);
+                    sql += " AND qtd = ?";
                 }
                 if (preco != null) {
-                    stmt.setDouble(index++, preco);
+                    sql += " AND preco = ?";
                 }
                 if (total != null) {
-                    stmt.setDouble(index++, total);
+                    sql += " AND total = ?";
                 }
 
-                ResultSet rs = stmt.executeQuery();
+                try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+                    int index = 1;
 
-                // Processa o resultado da consulta
-                while (rs.next()) {
-                    Produto p = new Produto();
-                    p.setId(rs.getInt("id"));
-                    p.setProduto(rs.getString("produto"));
-                    p.setQtd(rs.getInt("qtd"));
-                    p.setPreco(rs.getDouble("preco"));
-                    p.setTotal(rs.getDouble("total"));
-                    produtos.add(p);
+                    // Preenche os valores dos parâmetros na consulta
+                    if (produto != null && !produto.isEmpty()) {
+                        stmt.setString(index++, "%" + produto + "%");
+                    }
+                    if (qtd != null) {
+                        stmt.setDouble(index++, qtd);
+                    }
+                    if (preco != null) {
+                        stmt.setDouble(index++, preco);
+                    }
+                    if (total != null) {
+                        stmt.setDouble(index++, total);
+                    }
+
+                    ResultSet rs = stmt.executeQuery();
+
+                    // Processa o resultado da consulta
+                    while (rs.next()) {
+                        Produto p = new Produto();
+                        p.setId(rs.getInt("id"));
+                        p.setProduto(rs.getString("produto"));
+                        p.setQtd(rs.getDouble("qtd"));
+                        p.setPreco(rs.getDouble("preco"));
+                        p.setTotal(rs.getDouble("total"));
+                        produtos.add(p);
+                    }
                 }
+            } else {
+                throw new SQLException("Erro ao conectar ao banco de dados");
             }
-        } else {
-            throw new SQLException("Erro ao conectar ao banco de dados");
+        } finally {
+            if (connection != null) {
+                conexao.desconectar(connection, null);
+            }
         }
-    } finally {
-        if (connection != null) {
-            conexao.desconectar(connection, null);
-        }
+        return produtos;
     }
-    return produtos;
-}
 
- /*   
-public void atualizarTabela(List<Produto> produtos) {
-    // Obtém o modelo da tabela
-    DefaultTableModel model = (DefaultTableModel) tblTabela.getModel();
+    /*
+     * public void atualizarTabela(List<Produto> produtos) {
+     * // Obtém o modelo da tabela
+     * DefaultTableModel model = (DefaultTableModel) tblTabela.getModel();
+     * 
+     * // Limpa a tabela atual
+     * model.setRowCount(0);
+     * 
+     * // Percorre a lista de produtos e adiciona os dados na tabela
+     * for (Produto p : produtos) {
+     * // Cria uma linha com os dados do produto
+     * Object[] row = new Object[4];
+     * row[0] = p.getId();
+     * row[1] = p.getProduto();
+     * row[2] = p.getQtd();
+     * row[3] = p.getPreco();
+     * row[4] = p.getTotal();
+     * 
+     * 
+     * // Adiciona a linha ao modelo da tabela
+     * model.addRow(row);
+     * }
+     * }
+     */
 
-    // Limpa a tabela atual
-    model.setRowCount(0);
-
-    // Percorre a lista de produtos e adiciona os dados na tabela
-    for (Produto p : produtos) {
-        // Cria uma linha com os dados do produto
-        Object[] row = new Object[4];
-        row[0] = p.getId();
-        row[1] = p.getProduto();
-        row[2] = p.getQtd();
-        row[3] = p.getPreco();
-        row[4] = p.getTotal();
-        
-
-        // Adiciona a linha ao modelo da tabela
-        model.addRow(row);
-    }
-}
-    */
-    
-    
-    
-    
-    
-    
-    
-    
 }

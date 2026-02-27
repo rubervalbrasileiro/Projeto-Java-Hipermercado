@@ -11,6 +11,8 @@ Projeto desenvolvido com finalidade educacional, visando o treinamento prático 
 - Java SE
 - MySQL
 - JDBC
+- GitHub
+- GitBash
 - Swing
 - Programação Orientada a Objetos
 - Collections Framework
@@ -48,5 +50,7 @@ O projeto possui documentação técnica completa explicando:
 📄 [Documentação Técnica Completa](src/docs/Documentação_Projeto_Hipermercado.pdf)
 
 Projeto desenvolvido para fins educacionais e evolução técnica.
+
+⚠ Projeto em evolução continua...
 
 
