@@ -2,8 +2,9 @@
 package models;
 
 /**
- *BR-Software Vs. 1.0 25/09/2024
+ * BR-Software Vs. 1.0 25/09/2024
  * Projeto Supermercado
+ * 
  * @author Ruberval Brasileiro
  */
 public class Categoria extends Produto {
@@ -14,12 +15,15 @@ public class Categoria extends Produto {
     private String frios;
     private String limpesa;
     private String perfumaria;
-   
-    public Categoria(int id, String produto, int qtd, double preco, double total, String categoria, String supermercado) {
+
+    public Categoria(int id, String produto, int qtd, double preco, double total, String categoria,
+            String supermercado) {
         super(id, produto, qtd, preco, total, categoria, supermercado);
     }
 
-    public Categoria(String cereais, String verduras, String frutas, String carnes, String frios, String limpesa, String perfumaria, int id, String produto, int qtd, double preco, double total, String categoria, String supermercado) {
+    public Categoria(String cereais, String verduras, String frutas, String carnes, String frios, String limpesa,
+            String perfumaria, int id, String produto, int qtd, double preco, double total, String categoria,
+            String supermercado) {
         super(id, produto, qtd, preco, total, categoria, supermercado);
         this.cereais = cereais;
         this.verduras = verduras;
@@ -85,5 +89,5 @@ public class Categoria extends Produto {
     public void setPerfumaria(String perfumaria) {
         this.perfumaria = perfumaria;
     }
-    
+
 }

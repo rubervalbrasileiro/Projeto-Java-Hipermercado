@@ -94,7 +94,7 @@ public class ProdutoDAO {
         try {
             if (conexao.conectar()) {
                 connection = conexao.getConn();
-                String sql = "SELECT * FROM produto WHERE status = 1";
+                String sql = "SELECT * FROM produto WHERE status = 1 ORDER BY produto ASC";
                 // String sql = "SELECT id, produto, qtd, preco, total FROM produto"; // SQL
                 // corrigido para a tabela produto
                 stmt = connection.prepareStatement(sql);
